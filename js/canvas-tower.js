@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
           window.addEventListener("resize", resizeCanvas);
           setTimeout(() => {
             animationFrameId = requestAnimationFrame(animateCycle);
-          }, 2000);
+          }, 1000);
           processObserver.unobserve(processSection);
         }
       });
