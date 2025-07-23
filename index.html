@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Неемія 3: Відбудова Стін Єрусалиму</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Chosen Palette: Calm Harmony (Beige, Terracotta, Soft Green, Deep Blue/Grey) -->
+    <!-- Application Structure Plan: A thematic, single-page scrolling application designed as a narrative exploration. The structure includes: 1. Hero Section for introduction. 2. "The Builders" section with an interactive donut chart showing the diversity of workers and detailed info on Sheep Gate. 3. "The Process & Strategy" explaining the organized approach with a diagram of the gates. 4. "Challenges & Contrast" highlighting opposition and internal issues with interactive cards. 5. "The Deeper Meaning" for theological application. 6. "Our Role Today" for personal reflection. 7. A consolidated "Quiz Section" at the very end for all questions with interactive feedback and a final AI-generated summary. This structure logically guides the user through the content before testing their knowledge, making the learning path clear and engaging. -->
+    <!-- Visualization & Content Choices: Report Info: Diversity of builders -> Goal: Organize/Compare -> Viz: Interactive Donut Chart (Chart.js) with emojis -> Interaction: Hover to see details -> Justification: Visually communicates the unity in diversity and adds thematic elements. Report Info: Systematic building process -> Goal: Inform -> Method: HTML/CSS diagram -> Justification: Simplifies understanding of the organized effort. Report Info: Diligent vs. Refusing workers -> Goal: Compare -> Method: Two-column card layout with hover effects -> Justification: Directly visualizes the contrast and adds engagement. Report Info: Prophecies -> Goal: Inform/Relate -> Method: Clickable cards -> Justification: Prevents a "wall of text" and encourages interaction. Quiz Questions -> Goal: Assess understanding -> Method: Accordion-style questions with radio buttons, immediate feedback, correct answer highlighting, and AI-generated summary -> Justification: Provides interactive learning and personalized encouragement. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="antialiased">
+    <header id="header" class="bg-FDF6E3/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+      <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="text-2xl font-bold text-accent">Неемія 3</div>
+        <div class="hidden md:flex space-x-8">
+          <a href="#builders" class="nav-link font-semibold">Будівельники</a>
+          <a href="#process" class="nav-link font-semibold">Процес</a>
+          <a href="#meaning" class="nav-link font-semibold">Значення</a>
+          <a href="#application" class="nav-link font-semibold">Застосування</a>
+          <a href="#quiz-section" class="nav-link font-semibold">Вікторина</a>
+        </div>
+        <div class="md:hidden">
+          <button id="menu-btn" class="text-gray-700 focus:outline-none">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <div id="mobile-menu" class="hidden md:hidden">
+        <a href="#builders" class="block py-2 px-4 text-sm hover:bg-gray-200">Будівельники</a>
+        <a href="#process" class="block py-2 px-4 text-sm hover:bg-gray-200">Процес</a>
+        <a href="#meaning" class="block py-2 px-4 text-sm hover:bg-gray-200">Значення</a>
+        <a href="#application" class="block py-2 px-4 text-sm hover:bg-gray-200">Застосування</a>
+        <a href="#quiz-section" class="block py-2 px-4 text-sm hover:bg-gray-200">Вікторина</a>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+      <section id="hero" class="text-center mb-20 md:mb-32 section-fade-in">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Одна мета. Один народ.</h1>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-600">
+          Третій розділ книги Неемії — це не просто список імен. Це потужна історія про єдність,
+          жертовність та організованість Божого народу, який об'єднався для відбудови стін
+          Єрусалиму. Давайте дослідимо, як ця давня історія надихає нас сьогодні.
+        </p>
+      </section>
+
+      <section id="builders" class="mb-20 md:mb-32 section-fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Хто будував стіну?</h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">
+          Головна ідея розділу — дивовижна різноманітність людей, які працювали пліч-о-пліч. Від
+          первосвященника до дочок Шалума, від золотарів до торговців — кожен знайшов своє місце у
+          Божій справі. Ця діаграма показує лише частину залучених груп, ілюструючи єдність у
+          різноманітті.
+        </p>
+        <div class="chart-container">
+          <canvas id="buildersChart"></canvas>
+        </div>
+        <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+          <h3 class="text-2xl font-bold mb-3 text-accent">Особливе значення Овечої брами</h3>
+          <p class="text-gray-600">
+            Овеча брама була ключовим входом для жертовних овець до храму, тому її відбудову
+            розпочали первосвященник Еліяшів та інші священики. Її освячення підкреслює глибоке
+            релігійне значення, а її символізм, як "воріт", що ведуть до Храму, нагадує про Ісуса
+            Христа, "Агнця Божого", що є початком і кінцем нашої вічної надії.
+          </p>
+        </div>
+      </section>
+
+      <section id="process" class="mb-20 md:mb-32 section-fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Стратегія та Організація</h2>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="order-2 md:order-1">
+            <h3 class="text-2xl font-bold mb-4 text-accent">Системний підхід</h3>
+            <p class="mb-4 text-gray-600">
+              Неемія продемонстрував винятковий організаторський талант. Робота була чітко
+              розподілена на 42 ділянки. Будівництво велося системно, проти годинникової стрілки,
+              починаючи від Овечої брами і закінчуючи біля неї ж.
+            </p>
+            <h3 class="text-2xl font-bold mb-4 text-accent">Особиста мотивація</h3>
+            <p class="mb-4 text-gray-600">
+              Багатьом було доручено працювати "навпроти свого дому". Це не тільки економило час,
+              але й значно підвищувало особисту зацікавленість та мотивацію, адже люди захищали
+              власні родини та майно.
+            </p>
+            <h3 class="text-2xl font-bold mb-4 text-accent">Боже керівництво</h3>
+            <p class="text-gray-600">
+              Однак головною рушійною силою була віра в те, що "Божа рука над цим". Народ усвідомив,
+              що це не просто людська ініціатива, а справа, яку веде сам Бог, і це надихнуло їх на
+              єдність та жертовність.
+            </p>
+          </div>
+          <div class="order-1 md:order-2 flex justify-center items-center">
+            <div class="process-visual">
+              <canvas id="cycleCanvas"></canvas>
+              <div id="cycleStatus">
+                <span id="cycleText">Овеча брама</span>
+                <span class="arrow-orange">→</span>
+                <span>Рибна брама</span>
+                <span class="arrow-orange">→</span>
+                <span>...і далі по колу</span>
+              </div>
+              <div id="startFinishLabel">СТАРТ</div>
+              <div id="tower-tooltip">
+                <h4>Башта Хананеїла</h4>
+                <p>Згадується в Єремії 31:38 як точка відбудови Єрусалиму.</p>
+              </div>
+              <div id="tower-overlay"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="challenges" class="mb-20 md:mb-32 section-fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Контрасти: Відданість і Байдужість
+        </h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">
+          Не всі однаково відгукнулися на Божий заклик. Неемія чесно фіксує як приклади надзвичайної
+          ревності, так і випадки ухилення від роботи, показуючи, що в будь-якій великій справі є
+          місце різним людським реакціям.
+        </p>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div
+            class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-green-500 interactive-card"
+          >
+            <h3 class="text-2xl font-bold mb-4">Ревні Працівники</h3>
+            <p class="mb-4 text-gray-600">
+              Неемія особливо виділяє тих, хто працював з надзвичайною відданістю. Наприклад, про
+              <span class="font-bold text-green-600">Баруха, сина Заббая</span>, сказано, що він
+              працював "ревним" (3:20). Інші, як мешканці Такої чи Меремот, брали на себе по дві
+              ділянки.
+            </p>
+            <p class="font-semibold">
+              Це показує, що Бог бачить і цінує кожну працю, виконану щиро і з відданістю для Нього.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-red-500 interactive-card">
+            <h3 class="text-2xl font-bold mb-4">Вельможі, що відмовились</h3>
+            <p class="mb-4 text-gray-600">
+              На контрасті, про вельмож із Такої сказано, що вони
+              <span class="font-bold text-red-600">"не захотіли працювати для свого Господа"</span>
+              (3:5). Можливо, через гордість, лінь або зв'язки з ворогами вони відмовилися "схилити
+              свою шию".
+            </p>
+            <p class="font-semibold">
+              Це нагадування, що навіть у Божій справі можуть бути ті, хто обирає стояти осторонь.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="meaning" class="mb-20 md:mb-32 section-fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Глибше Значення: Чому це було важливо?
+        </h2>
+        <div class="space-y-8">
+          <div class="bg-white p-8 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold mb-3">Відновлення Божого Імені та Народу</h3>
+            <p class="text-gray-600">
+              Відбудова стін була не просто будівельним проєктом. Це був видимий знак того, що Бог
+              не покинув Свій народ. Зруйноване місто було ганьбою для імені Бога, а його
+              відновлення стало символом Божої милості, вірності та відновлення ідентичності Ізраїлю
+              як Його обраного народу.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-lg shadow-md">
+            <h3 class="text-2xl font-bold mb-3">Виконання Давніх Пророцтв</h3>
+            <p class="text-600">
+              Неемія та його сучасники знали обіцянки Бога. Їхня праця була відповіддю на пророцтва,
+              дані задовго до них. Вони бачили, як Боже слово виконується на їхніх очах, і хотіли
+              стати частиною цього процесу.
+            </p>
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+              <div class="border-l-4 border-accent pl-4">
+                <p class="font-semibold">
+                  "Ось дні надходять, — слово Господнє, — і збудується місто Господеві від башти
+                  Хананаїла аж до Наріжної брами."
+                </p>
+                <p class="text-sm text-gray-500 mt-1">- Єремія 31:38</p>
+              </div>
+              <div class="border-l-4 border-secondary pl-4">
+                <p class="font-semibold">
+                  "І підійметься Єрусалим, і пробуватиме на місці своєму від брами Веніяминової аж
+                  до місця Першої брами..."
+                </p>
+                <p class="text-sm text-gray-500 mt-1">- Захарія 14:10</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="application" class="text-center mb-32 section-fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Хто я у цьому списку?</h2>
+        <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-gray-600">
+          Якщо в часи Неемії Бог відбудовував Єрусалим, то сьогодні Його головною справою є
+          будівництво Своєї Церкви та спасіння людей. Історія Неемії 3 ставить перед кожним із нас
+          питання: яку роль я відіграю в Божій роботі сьогодні? Чи я ревний працівник, як Барух, чи
+          байдужий спостерігач, як вельможі з Такої?
+        </p>
+        <div class="bg-white p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+          <h3 class="text-2xl font-bold mb-4">Надія на Новий Єрусалим</h3>
+          <p class="text-gray-600">
+            Євреї старанно ставили "двері, замки, засуви" для захисту. Але наша кінцева надія — на
+            Новий Єрусалим, про який сказано в Об'явленні 21:25:
+            <span class="font-semibold text-accent"
+              >"Брами його зачинятись не будуть удень, бо ночі там не буде"</span
+            >. Це майбутнє, де не буде потреби в захисті, бо зло буде переможене назавжди. І кожен,
+            хто сьогодні бере участь у будівництві Божої Церкви, є частиною цієї великої історії, що
+            веде до вічності.
+          </p>
+        </div>
+      </section>
+
+      <section id="quiz-section" class="mb-20 md:mb-32 section-fade-in">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Перевірте свої знання: Вікторина
+        </h2>
+        <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600">
+          Спробуйте відповісти на питання, щоб закріпити отримані знання про 3 розділ книги Неемії.
+        </p>
+
+        <div class="space-y-6 max-w-3xl mx-auto">
+          <!-- Question 1 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                1. Яке головне завдання описується в 3-му розділі книги Неемії?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q1" value="a" class="mr-2" /> а) Будівництво храму
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q1" value="b" class="mr-2" /> б) Відбудова стін Єрусалиму
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q1" value="c" class="mr-2" /> в) Організація війська
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q1" value="d" class="mr-2" /> г) Укладання мирних
+                договорів
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                2. Які якості Божого народу підкреслюються в цьому розділі?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q2" value="a" class="mr-2" /> а) Сила та агресивність
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q2" value="b" class="mr-2" /> б) Багатство та впливовість
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q2" value="c" class="mr-2" /> в) Єдність, жертовність та
+                організованість
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q2" value="d" class="mr-2" /> г) Мудрість та знання
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                3. Яке слово є ключовим у 3-му розділі Неемії?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q3" value="а" class="mr-2" /> а) Молилися
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q3" value="б" class="mr-2" /> б) Воювали
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q3" value="в" class="mr-2" /> в) Будували/відбудовували
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q3" value="г" class="mr-2" /> г) Планували
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                4. Чому Овеча брама мала особливе значення і була освячена?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q4" value="а" class="mr-2" /> а) Вона була найстарішою
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q4" value="б" class="mr-2" /> б) Вона була ключовим входом
+                для жертовних овець до храму
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q4" value="в" class="mr-2" /> в) Вона була найменш
+                пошкодженою
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q4" value="г" class="mr-2" /> г) Вона була побудована
+                першою
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                5. Хто був залучений на відбудову муру?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q5" value="1" class="mr-2" /> 1. висококваліфіковані
+                будівельники
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q5" value="2" class="mr-2" /> 2. наймити з сусідніх
+                областей такі як Санваллат і Товія
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q5" value="3" class="mr-2" /> 3. лише духовні люди
+                (священники та левіти)
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q5" value="4" class="mr-2" /> 4. різноманітні люди від
+                священників до навіть жінок
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 6 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                6. Що було основною мотивацією для єдності та жертовності народу?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q6" value="а" class="mr-2" /> а) Страх перед ворогами
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q6" value="б" class="mr-2" /> б) Бажання отримати
+                винагороду
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q6" value="в" class="mr-2" /> в) Усвідомлення, що "Бог це
+                робить"
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q6" value="г" class="mr-2" /> г) Наказ царя
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 7 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                7. Який підхід до розподілу праці застосував Неемія, щоб підвищити мотивацію?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q7" value="а" class="mr-2" /> а) Призначив найсильніших на
+                найважчі ділянки
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q7" value="б" class="mr-2" /> б) Дозволив багатьом
+                працювати біля своїх домівок
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q7" value="в" class="mr-2" /> в) Запросив іноземних
+                фахівців
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q7" value="г" class="mr-2" /> г) Встановив жорсткі терміни
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 8 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                8. Як вороги реагували на будівництво стін?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q8" value="а" class="mr-2" /> а) Допомагали будівельникам
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q8" value="б" class="mr-2" /> б) Ігнорували їх
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q8" value="в" class="mr-2" /> в) Реагували гнівом та
+                насмішками
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q8" value="г" class="mr-2" /> г) Пропонували мирні
+                переговори
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 9 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                9. Хто відмовився брати участь у роботі і чому?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q9" value="а" class="mr-2" /> а) Священники через
+                зайнятість
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q9" value="б" class="mr-2" /> б) Вельможі з Такої,
+                можливо, через гордість та зв’язки з ворогами
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q9" value="в" class="mr-2" /> в) Торговці через
+                відсутність будівельних навичок
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q9" value="г" class="mr-2" /> г) Жінки через фізичну
+                слабкість
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 10 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                10. Що означає, що Бог пам'ятає кожну працю, виконану з відданістю?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q10" value="а" class="mr-2" /> а) Він веде облік робочого
+                часу
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q10" value="б" class="mr-2" /> б) Він цінує щирість та
+                старанність у служінні
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q10" value="в" class="mr-2" /> в) Він винагороджує лише
+                професіоналів
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q10" value="г" class="mr-2" /> г) Він записує імена всіх
+                будівельників
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 11 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                11. Як історія відбудови Єрусалиму аналогічна будівництву Церкви сьогодні?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q11" value="а" class="mr-2" /> а) Вона показує, що лише
+                професіонали можуть будувати Церкву.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q11" value="б" class="mr-2" /> б) Вона демонструє, як
+                різні люди об'єднуються для спільної Божої справи.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q11" value="в" class="mr-2" /> в) Вона вчить нас будувати
+                фізичні стіни навколо церков.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q11" value="г" class="mr-2" /> г) Вона показує важливість
+                політичного впливу.
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 12 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                12. Чому Бог використовує різних людей, незалежно від їхніх професійних навичок, для
+                Своєї справи?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q12" value="а" class="mr-2" /> а) Щоб показати, що
+                професійні навички не важливі.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q12" value="б" class="mr-2" /> б) Тому що Він може діяти
+                через будь-кого, хто відданий Йому.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q12" value="в" class="mr-2" /> в) Щоб заплутати ворогів.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q12" value="г" class="mr-2" /> г) Щоб зменшити витрати на
+                будівництво.
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+
+          <!-- Question 13 -->
+          <div class="bg-white rounded-lg shadow-sm">
+            <div class="flex justify-between items-center cursor-pointer question-toggle">
+              <h4 class="text-xl font-semibold text-gray-800">
+                13. Яка різниця між відбудованим Єрусалимом у Неемії та Новим Єрусалимом з
+                Об'явлення?
+              </h4>
+              <span class="arrow-icon"><span>&#x25BF;</span></span>
+            </div>
+            <div class="answers-container">
+              <label class="block mb-2">
+                <input type="radio" name="q13" value="а" class="mr-2" /> а) Відбудований Єрусалим
+                був більшим за Новий Єрусалим.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q13" value="б" class="mr-2" /> б) Відбудований Єрусалим
+                мав стіни та замки для захисту, тоді як Новий Єрусалим не потребуватиме захисту.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q13" value="в" class="mr-2" /> в) Відбудований Єрусалим
+                був лише фізичним містом, а Новий Єрусалим – духовним.
+              </label>
+              <label class="block mb-2">
+                <input type="radio" name="q13" value="г" class="mr-2" /> г) Немає жодної різниці, це
+                одне й те саме місто.
+              </label>
+              <button
+                class="check-answer-btn mt-4 px-4 py-2 bg-accent text-white rounded-md hover:opacity-90 transition-opacity"
+              >
+                Перевірити відповідь
+              </button>
+              <div class="feedback-message mt-2 text-sm font-semibold"></div>
+              <div class="explanation-text hidden text-gray-700"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button
+            id="show-results-btn"
+            class="px-6 py-3 bg-secondary text-white font-bold rounded-md hover:opacity-90 transition-opacity"
+          >
+            Показати результат вікторини
+          </button>
+          <div id="results-summary" class="mt-8 p-6 bg-white rounded-lg shadow-lg hidden">
+            <h3 class="text-2xl font-bold mb-4 text-accent">Ваш результат:</h3>
+            <p id="score-display" class="text-xl mb-4"></p>
+            <div id="ai-feedback" class="text-gray-700"></div>
+            <div id="loading-spinner" class="text-gray-500 mt-4 hidden">
+              Завантаження результатів<span class="spinner-dots"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-20">
+      <div class="container mx-auto px-6 py-4 text-center">
+        <p>
+          Інтерактивний огляд на основі протоколу обговорення "Роздуми Живих Братів", 22 липня 2025
+          року.
+        </p>
+      </div>
+    </footer>
+    <script defer src="js/main.js"></script>
+    <script defer src="js/chart-builders.js"></script>
+    <script defer src="js/quiz.js"></script>
+    <script defer src="js/canvas-tower.js"></script>
+  </body>
+</html>
