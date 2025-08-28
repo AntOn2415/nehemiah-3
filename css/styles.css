@@ -2,14 +2,6 @@
 /* 1. Основні та глобальні стилі */
 /* ========================================= */
 
-/* Підключення шрифту Bebas Neue */
-@font-face {
-  font-family: "Bebas Neue";
-  src: url("../fonts/BebasNeue-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
 /* Підключення шрифту Montserrat */
 @font-face {
   font-family: "Montserrat";
@@ -36,7 +28,7 @@
   --marvel-gold: #feea00;
   --marvel-dark: #222222;
   --font-primary: "Montserrat", sans-serif;
-  --font-title: "Bebas Neue", cursive;
+  --font-title: "Montserrat", sans-serif; /* Виправлено тут */
   --border-radius-soft: 8px;
 }
 
@@ -270,7 +262,7 @@ body {
 }
 
 .thanos-title {
-  font-family: "Bebas Neue", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 2em;
   color: #ffcc00;
   margin-bottom: 30px;
