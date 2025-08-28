@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tempItem = document.createElement("div");
     tempItem.classList.add("spinner-item");
-    tempItem.innerHTML = `<img src="images/teams/avengers.png" alt="Avengers"><p>Месники</p>`;
+    tempItem.innerHTML = `<img src="images/teams/avengers.jpg" alt="Avengers"><p>Месники</p>`;
     teamSpinner.appendChild(tempItem);
     const itemWidth = tempItem.offsetWidth;
     teamSpinner.innerHTML = "";
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const teamItem = document.createElement("div");
       teamItem.classList.add("spinner-item");
       teamItem.dataset.team = team;
-      teamItem.innerHTML = `<img src="images/teams/${teamId}.png" alt="${team}"><p>${team}</p>`;
+      teamItem.innerHTML = `<img src="images/teams/${teamId}.jpg" alt="${team}"><p>${team}</p>`;
 
       teamItem.addEventListener("click", () => {
         const itemLeft = teamItem.offsetLeft;

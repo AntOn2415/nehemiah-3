@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     visionSection.innerHTML = `
       <div class="vision-content">
-        <img src="images/vision.png" alt="Віжен" class="vision-image">
+        <img src="images/vision.jpg" alt="Віжен" class="vision-image">
         <div class="vision-text">
           <h2 class="vision-title">${userName}, ти ${conjugatedVerb}, як ${teamAdjective} ${userTeam}!</h2>
           <p>Твій розум чистий, як камінь Розуму, і ти ${conjugatedWorthy} створити найсильнішу шаурму у всесвіті!</p>
@@ -243,48 +243,48 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         hero: "Капітан Америка 🛡️",
         text: "<b>Лаваш (1 шт)</b> — тримає все разом, як його щит. <br><b>Капуста пекінська (40 г)</b> — зелена «свіжість і порядок». <br><b>Сіль (1,5 г)</b> — дисципліна й баланс.",
-        image: "images/captain-america.png",
+        image: "images/captain-america.jpg",
         imageRight: false,
       },
       {
         hero: "Халк 💚",
         text: "<b>Курка (100 г)</b> — сила та міць. <br><b>Огірок (35 г)</b> — хрумка «свіжість сили».",
-        image: "images/hulk.png",
+        image: "images/hulk.jpg",
         imageRight: true,
       },
       {
         hero: "Тор ⚡",
         text: "<b>Білий соус (приблизно 50 г)</b> — густий, як грім у небі, і тримає все в купі. <br><b>Лимон (1 г соку)</b> — його блискавка освіжає смак.",
-        image: "images/thor.png",
+        image: "images/thor.jpg",
         imageRight: false,
       },
       {
         hero: "Залізна Людина 🔴",
         text: "<b>Помідор (48 г)</b> — червоний і соковитий, як його броня. <br><b>Кетчуп (15 г)</b> — технологічний вибух смаку.",
-        image: "images/iron-man.png",
+        image: "images/iron-man.jpg",
         imageRight: true,
       },
       {
         hero: "Людина-Павук 🕷️",
         text: "<b>Морква по-корейськи (30 г)</b> — тоненькі смужки, як його павутина. <br><b>Сир твердий (15 г)</b> — «склеює» все разом, як павутиння.",
-        image: "images/spiderman.png",
+        image: "images/spiderman.jpg",
         imageRight: false,
       },
       {
         hero: "Чорна Пантера 🐾",
         text: "<b>Перець солодкий (25 г)</b> — яскравий і швидкий, як його рухи. <br><b>Зелень укропу (1 г)</b> — свіжа, мов дика природа Ваканди.",
-        image: "images/black-panther.png",
+        image: "images/black-panther.jpg",
         imageRight: true,
       },
       {
         hero: "Скручуємо рол 💪",
         text: "Щит, міць, грім, павутина, броня та сила Ваканди тепер разом! Обережно згорни лаваш, фіксуючи начинку всередині, як справжній Капітан Америка, що утримує всесвіт разом.",
-        image: "images/captain-america-roll.png",
+        image: "images/captain-america-roll.jpg",
         imageRight: false,
       },
       {
         hero: "Завершення",
-        image: "images/shawarma.png",
+        image: "images/shawarma.jpg",
         text: `Перемога над голодом! <br>Смачного! Ти — справжній Месник, адже ${conjugatedFinalVerb} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${conjugatedFinalAdjective} до будь-яких викликів, навіть до найголодніших!`,
         isFinal: true,
       },
@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <section id="thanos-section" class="thanos-section">
         <h2 class="thanos-title">Занадто багато помилок...</h2>
         <div class="thanos-content">
-          <img src="images/thanos-gauntlet.png" alt="Танос з рукавицею нескінченності" class="thanos-image">
+          <img src="images/thanos-gauntlet.jpg" alt="Танос з рукавицею нескінченності" class="thanos-image">
           <p class="thanos-message">${userName}, ти ${c(
       "допустив"
     )} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
       thanosMusic.currentTime = 0;
     }
 
-    thanosImage.src = "images/thanos-snap.png";
+    thanosImage.src = "images/thanos-snap.jpg";
     thanosImage.classList.add("snap-animation");
     snapButton.style.display = "none";
 
