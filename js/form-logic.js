@@ -186,10 +186,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateTexts = () => {
     const userName = localStorage.getItem("userName");
     const userTeam = localStorage.getItem("userTeam");
-
     const quizTitle = document.getElementById("quiz-title");
+    const wasSnapped = localStorage.getItem("thanosSnap");
+
+    // Нова логіка для Quiz Title
     if (quizTitle) {
-      quizTitle.textContent = `${userName}, твоїй команді "${userTeam}" потрібен цей рецепт. Дай вірні відповіді на 5 важливих питань:`;
+      if (wasSnapped) {
+        quizTitle.textContent = `${userName}, спробуй ще раз! Можливо, цього разу всесвіт буде до тебе більш прихильним!`;
+        // Варіанти:
+        // quizTitle.textContent = `${userName}, Танос дав тобі другий шанс! Не змарнуй його!`;
+        // quizTitle.textContent = `${userName}, повертаємо час назад! Цього разу без помилок, будь ласка!`;
+
+        // Видаляємо ключ після використання
+        localStorage.removeItem("thanosSnap");
+      } else {
+        quizTitle.textContent = `${userName}, твоїй команді "${userTeam}" потрібен цей рецепт. Дай вірні відповіді на 5 важливих питань табору:`;
+      }
     }
 
     const recipeTitle = document.querySelector(".recipe-title");
@@ -236,6 +248,18 @@ document.addEventListener("DOMContentLoaded", () => {
   nameSpinner.addEventListener("scroll", () => handleScroll(nameSpinner, false));
 
   populateTeamSpinner();
+
+  const formTitle = document.querySelector(".form-title");
+  const wasSnapped = localStorage.getItem("thanosSnap");
+
+  if (wasSnapped) {
+    const userName = localStorage.getItem("userName");
+    if (userName) {
+      formTitle.textContent = `${userName}, спробуй ще раз! Танос не прощає помилок!`;
+    } else {
+      formTitle.textContent = "Спробуй ще раз! Танос не прощає помилок!";
+    }
+  }
 
   if (localStorage.getItem("userTeam") && localStorage.getItem("userName")) {
     document.getElementById("form-section").classList.add("hidden");

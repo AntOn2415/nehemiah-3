@@ -131,13 +131,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const conjugatedFinalVerb = isMaleTeam ? "зміг" : "змогла";
     const conjugatedFinalAdjective = isMaleTeam ? "готовий" : "готова";
 
-    const recipeTitle = document.querySelector(".recipe-title");
+    let recipeTitle = document.querySelector(".recipe-title");
+    if (!recipeTitle) {
+      recipeTitle = document.createElement("h2");
+      recipeTitle.classList.add("recipe-title");
+      recipeSection.appendChild(recipeTitle);
+    }
     recipeTitle.textContent = `${userName}, це твій рецепт Шаурми "Месники Завершення"!`;
 
     const recipeStepsData = [
       {
         hero: "Капітан Америка 🛡️",
-        text: "<b>Лаваш (1 шт)</b> — тримає все разом, як його щит. <br><b>Капуста пекінська (20 г)</b> і <b>Салат Айзберг (20 г)</b> — зелена «свіжість і порядок». <br><b>Сіль (1,5 г)</b> — дисципліна й баланс.",
+        text: "<b>Лаваш (1 шт)</b> — тримає все разом, як його щит. <br><b>Капуста пекінська (40 г)</b> — зелена «свіжість і порядок». <br><b>Сіль (1,5 г)</b> — дисципліна й баланс.",
         image: "images/captain-america.png",
         imageRight: false,
       },
@@ -149,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
         hero: "Тор ⚡",
-        text: "<b>Білий соус (приблизно 45 г)</b> — густий, як грім у небі, і тримає все в купі. <br><b>Лимон (1 г соку)</b> — його блискавка освіжає смак.",
+        text: "<b>Білий соус (приблизно 50 г)</b> — густий, як грім у небі, і тримає все в купі. <br><b>Лимон (1 г соку)</b> — його блискавка освіжає смак.",
         image: "images/thor.png",
         imageRight: false,
       },
@@ -238,6 +243,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
     const conjugatedVerb = isMaleTeam ? "допустив" : "допустила";
 
+    // Отримуємо аудіо-елементи
+    const avengersMusic = document.getElementById("avengersMusic");
+    const thanosMusic = document.getElementById("thanosMusic");
+
+    // Зупиняємо музику Месників, якщо вона грає
+    if (avengersMusic) {
+      avengersMusic.pause();
+      avengersMusic.currentTime = 0;
+    }
+
+    // Запускаємо музику Таноса
+    if (thanosMusic) {
+      thanosMusic.play().catch(e => console.error("Thanos music playback failed:", e));
+    }
+
     mainSection.innerHTML = `
       <section id="thanos-section" class="thanos-section">
         <h2 class="thanos-title">Занадто багато помилок...</h2>
@@ -261,18 +281,35 @@ document.addEventListener("DOMContentLoaded", () => {
   function showThanosSnapAnimation() {
     const thanosImage = document.querySelector(".thanos-image");
     const snapButton = document.getElementById("snap-button");
-    snapButton.style.display = "none";
+    const thanosMusic = document.getElementById("thanosMusic");
+    const snapSound = document.getElementById("snapSound");
+
+    if (thanosMusic) {
+      thanosMusic.pause();
+      thanosMusic.currentTime = 0;
+    }
+
     thanosImage.src = "images/thanos-snap.png";
     thanosImage.classList.add("snap-animation");
+    snapButton.style.display = "none";
+
+    setTimeout(() => {
+      if (snapSound) {
+        snapSound.play().catch(e => console.error("Snap sound playback failed:", e));
+      }
+    }, 500);
 
     setTimeout(() => {
       const flash = document.createElement("div");
       flash.classList.add("white-flash-overlay");
       document.body.appendChild(flash);
 
+      // Зберігаємо ключ, що був "клац" Таноса
+      localStorage.setItem("thanosSnap", "true");
+
       setTimeout(() => {
         location.reload();
       }, 2000);
-    }, 1500);
+    }, 2500);
   }
 });
