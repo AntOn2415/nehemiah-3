@@ -4,6 +4,92 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalQuestions = quizQuestions.children.length;
   let incorrectAnswersExist = false;
 
+  const userName = localStorage.getItem("userName");
+  const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
+
+  const conjugatedVerbMap = {
+    male: {
+      показав: "показав",
+      зміг: "зміг",
+      маєш: "маєш",
+      потрапив: "потрапив",
+      зрозумів: "зрозумів",
+      готовий: "готовий",
+      допустив: "допустив",
+    },
+    female: {
+      показав: "показала",
+      зміг: "змогла",
+      маєш: "маєш",
+      потрапив: "потрапила",
+      зрозумів: "зрозуміла",
+      готовий: "готова",
+      допустив: "допустила",
+    },
+  };
+
+  const gender = isMaleTeam ? "male" : "female";
+  const c = key => conjugatedVerbMap[gender][key];
+
+  // Функція для перемішування масиву (алгоритм Фішера-Єйтса)
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  // Перемішуємо відповіді для кожного питання
+  document.querySelectorAll(".question").forEach(question => {
+    const optionsContainer = question.querySelector(".options");
+    const options = Array.from(optionsContainer.children);
+
+    options.forEach(option => optionsContainer.removeChild(option));
+
+    shuffleArray(options);
+
+    options.forEach(option => optionsContainer.appendChild(option));
+  });
+
+  // Об'єкт, що містить біблійні істини та пояснення для кожного питання
+  const bibleTruths = {
+    1: {
+      truth: `Твоя юність і невмілість не обмежує Бога. Він шукає серце, готове довіряти та діяти.`,
+      incorrect: `На жаль, це невірний вибір. Божа сила не залежить від фізичних здібностей чи костюма, а від серця, що довіряє Йому.`,
+      correct: `Саме так! Ти ${c(
+        "показав"
+      )}, що для Бога найважливіше — серце, що довіряє, а не зовнішні дані. Ти ${c("готовий")}!`,
+    },
+    2: {
+      truth: `Ісус не був далеким “супер-Богом”, а пройшов усе як людина — з реальними емоціями, але не згрішив. Він — наша надія, коли ми не можемо себе стримати або контролювати почуття.`,
+      incorrect: `На жаль, це не зовсім вірно. Ісус показав, що емоціями можна керувати, підкоряючи їх волі Отця. Це і є Його приклад для нас.`,
+      correct: `Так, абсолютно вірно! Ісус показав нам, що навіть у найскладніші моменти ми можемо підкорити свої емоції Богові. Ти ${c(
+        "маєш"
+      )} мудрість Халка, але з контролем!`,
+    },
+    3: {
+      truth: `Бог прагне глибоких стосунків із нами, а не просто зовнішньої слухняності. Правила — важливі, але не головне. Головне — серце, що шукає Отця.`,
+      incorrect: `Це не те, що нам показав блудний син. Зовнішня слухняність без серця не приносить радості Богу. Подумай, що було головним для батька?`,
+      correct: `Вірно! Серце, що прагне Отця, завжди буде головним. Ти ${c(
+        "маєш"
+      )} вірність, як у Капітана Америки, але з глибиною серця.`,
+    },
+    4: {
+      truth: `Справжня цінність полягає не в матеріальному багатстві чи 'крутості', а в готовності віддати все заради стосунків з Ісусом.`,
+      incorrect: `Не зовсім. Справжня цінність не в багатстві, а в готовності відмовитись від усього, що віддаляє від Бога, заради стосунків із Ним. Подумай про Закхея.`,
+      correct: `Саме так! Ти, як і Залізна Людина, ${c(
+        "зрозумів"
+      )}, що справжня сила не в матеріальних речах, а у стосунках. Ти – справжній геній, мільярдер, філантроп!`,
+    },
+    5: {
+      truth: `Справжня сила — в слухняності Богу.`,
+      incorrect: `Ні, це хибна думка. Сила Самсона була не в його волоссі чи м'язах, а в його слухняності Богу. Запам'ятай це!`,
+      correct: `Абсолютно вірно! Як і Тор, ти ${c(
+        "зрозумів"
+      )}, що справжня сила виходить з вищого джерела. Твоя слухняність — це твій Мйольнір!`,
+    },
+  };
+
   const quizObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach(entry => {
@@ -31,31 +117,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
       questionDiv.dataset.answered = "true";
       const isCorrect = e.target.dataset.answer === "true";
+      const questionId = questionDiv.dataset.questionId;
+      const questionData = bibleTruths[questionId];
 
-      e.target.style.transform = "scale(1.1)";
-      e.target.style.transition = "transform 0.2s ease-out";
+      // Видаляємо попередні повідомлення, якщо такі були
+      const oldMessage = questionDiv.querySelector(".feedback-message");
+      if (oldMessage) {
+        oldMessage.remove();
+      }
 
-      setTimeout(() => {
-        if (isCorrect) {
-          e.target.style.backgroundColor = "green";
-          correctAnswersCount++;
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("feedback-message");
+
+      if (isCorrect) {
+        e.target.style.backgroundColor = "green";
+        messageDiv.innerHTML = `<p style="color: lightgreen; font-weight: bold;">${questionData.correct}</p>`;
+        correctAnswersCount++;
+      } else {
+        e.target.style.backgroundColor = "red";
+        incorrectAnswersExist = true;
+
+        const correctButton = questionDiv.querySelector('[data-answer="true"]');
+        if (correctButton) {
+          correctButton.style.backgroundColor = "green";
+        }
+
+        messageDiv.innerHTML = `
+          <p style="color: red; font-weight: bold;">${questionData.incorrect}</p>
+          <p style="margin-top: 15px; font-weight: bold;">Біблійна Істина:</p>
+          <p>${questionData.truth}</p>
+        `;
+      }
+
+      questionDiv.appendChild(messageDiv);
+      questionDiv.querySelectorAll(".option").forEach(btn => (btn.disabled = true));
+
+      if (quizQuestions.querySelectorAll('[data-answered="true"]').length === totalQuestions) {
+        if (incorrectAnswersExist) {
+          setTimeout(showThanos, 1500);
         } else {
-          e.target.style.backgroundColor = "red";
-          incorrectAnswersExist = true;
-          const correctButton = questionDiv.querySelector('[data-answer="true"]');
-          if (correctButton) {
-            correctButton.style.backgroundColor = "green";
-          }
+          setTimeout(showVisionSection, 1500);
         }
-
-        if (quizQuestions.querySelectorAll('[data-answered="true"]').length === totalQuestions) {
-          if (incorrectAnswersExist) {
-            setTimeout(showThanos, 1500);
-          } else {
-            setTimeout(showVisionSection, 1500);
-          }
-        }
-      }, 200);
+      }
     });
   });
 
@@ -70,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const userTeam = localStorage.getItem("userTeam");
     const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
 
-    // Нова логіка для визначення прикметника команди
     const teamAdjectiveMap = {
       "Капітан Америка": "справжній",
       Месники: "справжні",
@@ -78,12 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "Чорні пантери": "справжні",
       Тор: "справжній",
       "Speider-man": "справжній",
-      Марвел: "справжній",
+      "Капітан Марвел": "справжній",
       Халк: "справжній",
     };
     const teamAdjective = teamAdjectiveMap[userTeam];
-
-    // Динамічна зміна дієслів та прикметників для користувача на основі статі команди
     const conjugatedVerb = isMaleTeam ? "вистояв" : "вистояла";
     const conjugatedWorthy = isMaleTeam ? "гідний" : "гідна";
 
@@ -137,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       recipeTitle.classList.add("recipe-title");
       recipeSection.appendChild(recipeTitle);
     }
-    recipeTitle.textContent = `${userName}, це твій рецепт Шаурми "Месники Завершення"!`;
+    recipeTitle.textContent = `Це твій рецепт Шаурми "Месники Завершення"!`;
 
     const recipeStepsData = [
       {
@@ -185,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         hero: "Завершення",
         image: "images/shawarma.png",
-        text: `Перемога над голодом! <br>Смачного, ${userName}! Ти — справжній Месник, адже ${conjugatedFinalVerb} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${conjugatedFinalAdjective} до будь-яких викликів, навіть до найголодніших!`,
+        text: `Перемога над голодом! <br>Смачного! Ти — справжній Месник, адже ${conjugatedFinalVerb} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${conjugatedFinalAdjective} до будь-яких викликів, навіть до найголодніших!`,
         isFinal: true,
       },
     ];
@@ -241,19 +341,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const userName = localStorage.getItem("userName");
     const leaderName = localStorage.getItem("leaderName");
     const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
-    const conjugatedVerb = isMaleTeam ? "допустив" : "допустила";
 
-    // Отримуємо аудіо-елементи
     const avengersMusic = document.getElementById("avengersMusic");
     const thanosMusic = document.getElementById("thanosMusic");
 
-    // Зупиняємо музику Месників, якщо вона грає
     if (avengersMusic) {
       avengersMusic.pause();
       avengersMusic.currentTime = 0;
     }
 
-    // Запускаємо музику Таноса
     if (thanosMusic) {
       thanosMusic.play().catch(e => console.error("Thanos music playback failed:", e));
     }
@@ -263,7 +359,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <h2 class="thanos-title">Занадто багато помилок...</h2>
         <div class="thanos-content">
           <img src="images/thanos-gauntlet.png" alt="Танос з рукавицею нескінченності" class="thanos-image">
-          <p class="thanos-message">${userName}, ти ${conjugatedVerb} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
+          <p class="thanos-message">${userName}, ти ${c(
+      "допустив"
+    )} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
           <button id="snap-button" class="snap-button">
             <span class="button-text">Щелкнути "Рукавицею Нескінченності"</span>
           </button>
@@ -304,7 +402,6 @@ document.addEventListener("DOMContentLoaded", () => {
       flash.classList.add("white-flash-overlay");
       document.body.appendChild(flash);
 
-      // Зберігаємо ключ, що був "клац" Таноса
       localStorage.setItem("thanosSnap", "true");
 
       setTimeout(() => {

@@ -173,7 +173,43 @@ body {
 .options button:active {
   transform: scale(0.95);
 }
+.options button:disabled {
+  cursor: not-allowed;
+}
 
+.question[data-answered="true"]
+  .options
+  button:not([data-answer]):not([style*="background-color: red"]):disabled,
+.question[data-answered="true"]
+  .options
+  button:not([data-answer]):not([style*="background-color: green"]):disabled {
+  background-color: #555 !important;
+  color: #aaa;
+  opacity: 0.6;
+}
+
+.options button:disabled:hover {
+  background-color: #555 !important;
+}
+.feedback-message {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: var(--border-radius-soft);
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.feedback-message p {
+  margin: 0;
+}
+
+.feedback-message p:last-child {
+  margin-top: 10px;
+}
+
+.feedback-message p b {
+  color: var(--marvel-gold);
+}
 /* ========================================= */
 /* 4. Секція "Рецепт" */
 /* ========================================= */
