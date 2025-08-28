@@ -28,7 +28,7 @@
   --marvel-gold: #feea00;
   --marvel-dark: #222222;
   --font-primary: "Montserrat", sans-serif;
-  --font-title: "Montserrat", sans-serif; /* Виправлено тут */
+  --font-title: "Montserrat", sans-serif;
   --border-radius-soft: 8px;
 }
 
@@ -59,7 +59,6 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* Видаляємо overflow: hidden; звідси */
 }
 
 /* Додаємо новий контейнер для зображення */
@@ -69,8 +68,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Обрізаємо зображення всередині цього контейнера */
-  z-index: 1; /* Забезпечуємо, щоб він був під контентом */
+  overflow: hidden;
+  z-index: 1;
 }
 
 /* Оновлюємо стилі самого зображення */
@@ -80,9 +79,9 @@ body {
   left: 50%;
   width: 100%;
   height: auto;
-  min-width: 120%; /* Встановлюємо мінімальну ширину, щоб воно було більше контейнера */
-  min-height: 120%; /* Встановлюємо мінімальну висоту */
-  transform: translate(-50%, -50%); /* Центруємо зображення */
+  min-width: 120%;
+  min-height: 120%;
+  transform: translate(-50%, -50%);
   object-fit: cover;
   filter: brightness(0.7);
   transition: transform 1.5s ease-in-out;
@@ -210,6 +209,31 @@ body {
 .feedback-message p b {
   color: var(--marvel-gold);
 }
+
+/* Стилі для кнопки повернення */
+.back-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: var(--marvel-red);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-primary);
+}
+
+.back-button:hover {
+  background-color: #a03f3f; /* Темніший відтінок червоного */
+}
+
+.back-button.show {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
 /* ========================================= */
 /* 4. Секція "Рецепт" */
 /* ========================================= */
@@ -436,11 +460,11 @@ body {
   padding: 50px 20px;
   background-color: var(--marvel-blue);
   text-align: center;
-  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Додаємо плавний перехід */
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 
 .form-section.hidden {
-  display: none; /* Замість цього використовуємо прозорість та видимість */
+  display: none;
   opacity: 0;
   visibility: hidden;
 }
@@ -467,6 +491,7 @@ body {
   display: block;
   font-size: 1.2rem;
   margin-bottom: 10px;
+  color: var(--marvel-gold); /* Колір для назви команди/імені */
 }
 
 .submit-button {
@@ -536,6 +561,7 @@ body {
   transform: scale(0.85);
   opacity: 0.7;
   scroll-snap-align: center;
+  color: #fff; /* Колір тексту для елементів спінера */
 }
 
 .spinner-item.active {
@@ -566,12 +592,13 @@ body {
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  white-space: nowrap; /* Цей рядок запобігає переносу тексту */
+  white-space: nowrap;
   transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
   transform: scale(0.85);
   opacity: 0.7;
   scroll-snap-align: center;
-  display: inline-block; /* Це дозволяє елементу займати тільки необхідну ширину */
+  display: inline-block;
+  color: #fff;
 }
 
 .spinner-name-item.active {
@@ -742,6 +769,15 @@ body {
 
   .final-message {
     font-size: 1.5rem;
+  }
+
+  .spinner-item {
+    width: 100px;
+  }
+
+  .spinner-name-item {
+    min-width: 100px;
+    font-size: 1rem;
   }
 }
 

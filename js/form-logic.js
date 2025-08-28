@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const nameSpinner = document.getElementById("name-spinner");
   const form = document.getElementById("team-form");
   const nameLabel = document.querySelector('label[for="name-select"]');
+  const backButton = document.getElementById("back-button");
+  const formSection = document.getElementById("form-section");
+  const quizSection = document.querySelector(".quiz-section");
 
   let selectedTeam = null;
   let selectedName = null;
@@ -175,13 +178,27 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("isMaleTeam", teamData.isMaleTeam ? "true" : "false");
       localStorage.setItem("leaderName", teamData.leaderName);
 
-      document.getElementById("form-section").classList.add("hidden");
-      document.querySelector(".quiz-section").classList.remove("hidden");
+      formSection.classList.add("hidden");
+      quizSection.classList.remove("hidden");
+      backButton.classList.remove("hidden");
       updateTexts();
     } else {
       alert("Будь ласка, оберіть і команду, і ім'я!");
     }
   });
+
+  if (backButton) {
+    backButton.addEventListener("click", () => {
+      formSection.classList.remove("hidden");
+      quizSection.classList.add("hidden");
+      backButton.classList.add("hidden");
+      localStorage.removeItem("userTeam");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("isMaleTeam");
+      localStorage.removeItem("leaderName");
+      updateFormTitleOnReturn();
+    });
+  }
 
   const updateTexts = () => {
     const userName = localStorage.getItem("userName");
@@ -189,15 +206,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const quizTitle = document.getElementById("quiz-title");
     const wasSnapped = localStorage.getItem("thanosSnap");
 
-    // Нова логіка для Quiz Title
     if (quizTitle) {
       if (wasSnapped) {
         quizTitle.textContent = `${userName}, спробуй ще раз! Можливо, цього разу всесвіт буде до тебе більш прихильним!`;
-        // Варіанти:
-        // quizTitle.textContent = `${userName}, Танос дав тобі другий шанс! Не змарнуй його!`;
-        // quizTitle.textContent = `${userName}, повертаємо час назад! Цього разу без помилок, будь ласка!`;
-
-        // Видаляємо ключ після використання
         localStorage.removeItem("thanosSnap");
       } else {
         quizTitle.textContent = `${userName}, твоїй команді "${userTeam}" потрібен цей рецепт. Дай вірні відповіді на 5 важливих питань табору:`;
@@ -206,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const recipeTitle = document.querySelector(".recipe-title");
     if (recipeTitle) {
-      recipeTitle.textContent = `${userName}, це твій рецепт Шаурми "Месники Завершення"!`;
+      recipeTitle.textContent = `Це твій рецепт Шаурми "Месники Завершення"!`;
     }
 
     const visionTitle = document.querySelector(".vision-title");
@@ -224,8 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       const teamAdjective = teamAdjectiveMap[userTeam];
       const conjugatedVerb = isMaleTeam ? "вистояв" : "вистояла";
+      const conjugatedWorthy = isMaleTeam ? "гідний" : "гідна";
 
       visionTitle.textContent = `${userName}, ти ${conjugatedVerb}, як ${teamAdjective} ${userTeam}!`;
+      document.querySelector(
+        ".vision-text p"
+      ).textContent = `Твій розум чистий, як камінь Розуму, і ти ${conjugatedWorthy} створити найсильнішу шаурму у всесвіті!`;
     }
 
     const finalMessage = document.querySelector(".final-message");
@@ -233,8 +248,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
       const conjugatedVerb = isMaleTeam ? "зміг" : "змогла";
       const conjugatedAdjective = isMaleTeam ? "готовий" : "готова";
-      finalMessage.innerHTML = `Перемога над голодом! <br>Смачного, ${userName}! Ти — справжній Месник, адже ${conjugatedVerb} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${conjugatedAdjective} до будь-яких викликів, навіть до найголодніших!`;
+      finalMessage.innerHTML = `Перемога над голодом! <br>Смачного! Ти — справжній Месник, адже ${conjugatedVerb} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${conjugatedAdjective} до будь-яких викликів, навіть до найголодніших!`;
     }
+  };
+
+  const updateFormTitleOnReturn = () => {
+    const formTitle = document.querySelector(".form-title");
+    formTitle.textContent = "Приєднуйся до своєї команди!";
   };
 
   const handleScroll = (spinner, isTeamSpinner) => {
@@ -262,8 +282,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (localStorage.getItem("userTeam") && localStorage.getItem("userName")) {
-    document.getElementById("form-section").classList.add("hidden");
-    document.querySelector(".quiz-section").classList.remove("hidden");
+    formSection.classList.add("hidden");
+    quizSection.classList.remove("hidden");
+    backButton.classList.remove("hidden");
     updateTexts();
   }
 });
