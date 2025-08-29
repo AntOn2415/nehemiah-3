@@ -342,8 +342,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const leaderName = localStorage.getItem("leaderName");
     const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
 
-    const avengersMusic = document.getElementById("avengersMusic");
     const thanosMusic = document.getElementById("thanosMusic");
+
+    const conjugatedThanosVerb = isMaleTeam ? "допустив" : "допустила";
+
+    const avengersMusic = document.getElementById("avengersMusic");
 
     if (avengersMusic) {
       avengersMusic.pause();
@@ -359,9 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <h2 class="thanos-title">Занадто багато помилок...</h2>
         <div class="thanos-content">
           <img src="images/thanos-gauntlet.jpg" alt="Танос з рукавицею нескінченності" class="thanos-image">
-          <p class="thanos-message">${userName}, ти ${c(
-      "допустив"
-    )} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
+          <p class="thanos-message">${userName}, ти ${conjugatedThanosVerb} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
           <button id="snap-button" class="snap-button">
             <span class="button-text">Щелкнути "Рукавицею Нескінченності"</span>
           </button>
