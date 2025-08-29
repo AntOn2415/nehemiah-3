@@ -1,3 +1,4 @@
+//js/form-logic.js
 document.addEventListener("DOMContentLoaded", () => {
   const teamSpinner = document.getElementById("team-spinner");
   const nameSpinner = document.getElementById("name-spinner");
@@ -173,15 +174,15 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     if (selectedTeam && selectedName) {
       const teamData = teamsData[selectedTeam];
+
+      // Записуємо дані в localStorage
       localStorage.setItem("userTeam", selectedTeam);
       localStorage.setItem("userName", selectedName);
       localStorage.setItem("isMaleTeam", teamData.isMaleTeam ? "true" : "false");
       localStorage.setItem("leaderName", teamData.leaderName);
 
-      formSection.classList.add("hidden");
-      quizSection.classList.remove("hidden");
-      backButton.classList.remove("hidden");
-      updateTexts();
+      // Перезавантажуємо сторінку після відправки
+      window.location.reload();
     } else {
       alert("Будь ласка, оберіть і команду, і ім'я!");
     }
@@ -281,6 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Цей блок тепер буде працювати після перезавантаження сторінки
   if (localStorage.getItem("userTeam") && localStorage.getItem("userName")) {
     formSection.classList.add("hidden");
     quizSection.classList.remove("hidden");

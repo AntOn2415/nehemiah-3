@@ -1,30 +1,34 @@
+//js/quiz-logic.js
 document.addEventListener("DOMContentLoaded", () => {
+  // Лог для перевірки стану localStorage при завантаженні сторінки
+  const userName = localStorage.getItem("userName");
+  const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
+
   const quizQuestions = document.getElementById("quiz-questions");
   let correctAnswersCount = 0;
   const totalQuestions = quizQuestions.children.length;
   let incorrectAnswersExist = false;
 
-  const userName = localStorage.getItem("userName");
-  const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
-
   const conjugatedVerbMap = {
     male: {
       показав: "показав",
       зміг: "зміг",
-      маєш: "маєш",
-      потрапив: "потрапив",
       зрозумів: "зрозумів",
       готовий: "готовий",
       допустив: "допустив",
+      вистояв: "вистояв",
+      гідний: "гідний",
+      вірний: "вірний",
     },
     female: {
       показав: "показала",
       зміг: "змогла",
-      маєш: "маєш",
-      потрапив: "потрапила",
       зрозумів: "зрозуміла",
       готовий: "готова",
       допустив: "допустила",
+      вистояв: "вистояла",
+      гідний: "гідна",
+      вірний: "вірна",
     },
   };
 
@@ -63,16 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
     2: {
       truth: `Ісус не був далеким “супер-Богом”, а пройшов усе як людина — з реальними емоціями, але не згрішив. Він — наша надія, коли ми не можемо себе стримати або контролювати почуття.`,
       incorrect: `На жаль, це не зовсім вірно. Ісус показав, що емоціями можна керувати, підкоряючи їх волі Отця. Це і є Його приклад для нас.`,
-      correct: `Так, абсолютно вірно! Ісус показав нам, що навіть у найскладніші моменти ми можемо підкорити свої емоції Богові. Ти ${c(
-        "маєш"
-      )} мудрість Халка, але з контролем!`,
+      correct: `Так, абсолютно вірно! Ісус показав нам, що навіть у найскладніші моменти ми можемо підкорити свої емоції Богові. Ти маєш мудрість Халка, але з контролем!`,
     },
     3: {
       truth: `Бог прагне глибоких стосунків із нами, а не просто зовнішньої слухняності. Правила — важливі, але не головне. Головне — серце, що шукає Отця.`,
-      incorrect: `Це не те, що нам показав блудний син. Зовнішня слухняність без серця не приносить радості Богу. Подумай, що було головним для батька?`,
-      correct: `Вірно! Серце, що прагне Отця, завжди буде головним. Ти ${c(
-        "маєш"
-      )} вірність, як у Капітана Америки, але з глибиною серця.`,
+      incorrect: `Це не те, що нам ${c(
+        "показав"
+      )} блудний син. Зовнішня слухняність без серця не приносить радості Богу. Подумай, що було головним для батька?`,
+      correct: `Вірно! Серце, що прагне Отця, завжди буде головним. Ти маєш вірність, як у Капітана Америки, але з глибиною серця.`,
     },
     4: {
       truth: `Справжня цінність полягає не в матеріальному багатстві чи 'крутості', а в готовності віддати все заради стосунків з Ісусом.`,
@@ -120,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const questionId = questionDiv.dataset.questionId;
       const questionData = bibleTruths[questionId];
 
-      // Видаляємо попередні повідомлення, якщо такі були
       const oldMessage = questionDiv.querySelector(".feedback-message");
       if (oldMessage) {
         oldMessage.remove();
@@ -171,7 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const userName = localStorage.getItem("userName");
     const userTeam = localStorage.getItem("userTeam");
-    const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
 
     const teamAdjectiveMap = {
       "Капітан Америка": "справжній",
@@ -184,15 +184,17 @@ document.addEventListener("DOMContentLoaded", () => {
       Халк: "справжній",
     };
     const teamAdjective = teamAdjectiveMap[userTeam];
-    const conjugatedVerb = isMaleTeam ? "вистояв" : "вистояла";
-    const conjugatedWorthy = isMaleTeam ? "гідний" : "гідна";
 
     visionSection.innerHTML = `
       <div class="vision-content">
         <img src="images/vision.jpg" alt="Віжен" class="vision-image">
         <div class="vision-text">
-          <h2 class="vision-title">${userName}, ти ${conjugatedVerb}, як ${teamAdjective} ${userTeam}!</h2>
-          <p>Твій розум чистий, як камінь Розуму, і ти ${conjugatedWorthy} створити найсильнішу шаурму у всесвіті!</p>
+          <h2 class="vision-title">${userName}, ти ${c(
+      "вистояв"
+    )}, як ${teamAdjective} ${userTeam}!</h2>
+          <p>Твій розум чистий, як камінь Розуму, і ти ${c(
+            "гідний"
+          )} створити найсильнішу шаурму у всесвіті!</p>
           <button id="show-recipe-btn" class="vision-button">Отримати рецепт</button>
         </div>
       </div>
@@ -227,9 +229,6 @@ document.addEventListener("DOMContentLoaded", () => {
     music.play().catch(e => console.error("Music playback failed", e));
 
     const userName = localStorage.getItem("userName");
-    const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
-    const conjugatedFinalVerb = isMaleTeam ? "зміг" : "змогла";
-    const conjugatedFinalAdjective = isMaleTeam ? "готовий" : "готова";
 
     let recipeTitle = document.querySelector(".recipe-title");
     if (!recipeTitle) {
@@ -285,7 +284,11 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         hero: "Завершення",
         image: "images/shawarma.jpg",
-        text: `Перемога над голодом! <br>Смачного! Ти — справжній Месник, адже ${conjugatedFinalVerb} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${conjugatedFinalAdjective} до будь-яких викликів, навіть до найголодніших!`,
+        text: `Перемога над голодом! <br>Смачного! Ти — справжній Месник, адже ${c(
+          "зміг"
+        )} поєднати героїчну силу, мудрість та відвагу, щоб створити цю легендарну шаурму. Тепер ти ${c(
+          "готовий"
+        )} до будь-яких викликів, навіть до найголодніших!`,
         isFinal: true,
       },
     ];
@@ -340,13 +343,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainSection = document.querySelector("main");
     const userName = localStorage.getItem("userName");
     const leaderName = localStorage.getItem("leaderName");
-    const isMaleTeam = localStorage.getItem("isMaleTeam") === "true";
-
-    const thanosMusic = document.getElementById("thanosMusic");
-
-    const conjugatedThanosVerb = isMaleTeam ? "допустив" : "допустила";
 
     const avengersMusic = document.getElementById("avengersMusic");
+    const thanosMusic = document.getElementById("thanosMusic");
 
     if (avengersMusic) {
       avengersMusic.pause();
@@ -362,7 +361,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <h2 class="thanos-title">Занадто багато помилок...</h2>
         <div class="thanos-content">
           <img src="images/thanos-gauntlet.jpg" alt="Танос з рукавицею нескінченності" class="thanos-image">
-          <p class="thanos-message">${userName}, ти ${conjugatedThanosVerb} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
+          <p class="thanos-message">${userName}, ти ${c(
+      "допустив"
+    )} критичні помилки! Що ж подумає про тебе твій лідер, ${leaderName}?</p>
           <button id="snap-button" class="snap-button">
             <span class="button-text">Щелкнути "Рукавицею Нескінченності"</span>
           </button>
